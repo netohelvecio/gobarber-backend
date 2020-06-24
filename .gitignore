@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/node,yarn,dotenv
-# Edit at https://www.toptal.com/developers/gitignore?templates=node,yarn,dotenv
+# Created by https://www.toptal.com/developers/gitignore/api/node,yarn,dotenv,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=node,yarn,dotenv,visualstudiocode
 
 ### dotenv ###
 .env
@@ -113,6 +113,18 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
 ### yarn ###
 # https://yarnpkg.com/advanced/qa#which-files-should-be-gitignored
 
@@ -128,4 +140,4 @@ dist
 # .yarn/cache
 # .pnp.*
 
-# End of https://www.toptal.com/developers/gitignore/api/node,yarn,dotenv
+# End of https://www.toptal.com/developers/gitignore/api/node,yarn,dotenv,visualstudiocode

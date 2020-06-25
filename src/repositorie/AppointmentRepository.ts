@@ -24,6 +24,10 @@ class AppointmentsRepository {
 
     return findAppointmentInSamedate || null;
   }
+
+  public all(): Appointment[] {
+    return this.appointments;
+  }
 }
 
 export default AppointmentsRepository;

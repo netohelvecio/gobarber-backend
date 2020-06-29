@@ -5,6 +5,8 @@ import { compare } from 'bcryptjs';
 import UsersRepository from '../repositories/UsersRepository';
 import User from '../models/User';
 
+import AppError from '../error/AppError';
+
 import authConfig from '../config/auth';
 
 interface Request {
@@ -24,13 +26,13 @@ class AuthenticateUserService {
     const user = await usersRepository.findbyEmail(email);
 
     if (!user) {
-      throw new Error('E-mail inválido.');
+      throw new AppError('E-mail inválido.', 401);
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
-      throw new Error('Senha inválida.');
+      throw new AppError('Senha inválida.', 401);
     }
 
     const token = sign({}, authConfig.secret, {

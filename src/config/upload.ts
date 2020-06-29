@@ -2,13 +2,20 @@ import { diskStorage } from 'multer';
 import crypto from 'crypto';
 import path from 'path';
 
+import AppError from '../error/AppError';
+
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
 const uploadConfig = {
   directory: tmpFolder,
+  limits: { fileSize: 100000 },
   storage: diskStorage({
     destination: tmpFolder,
-    filename(request, file, callback) {
+    filename(
+      request,
+      file,
+      callback: (error: AppError | null, filename: string) => void,
+    ) {
       const fileTypes = /jpeg|jpg|png/;
 
       const mimeType = fileTypes.test(file.mimetype);
@@ -16,17 +23,17 @@ const uploadConfig = {
         path.extname(file.originalname).toLowerCase(),
       );
 
-      if (mimeType && extensionFilename) {
-        const fileHash = crypto.randomBytes(10).toString('hex');
-        const filename = `${fileHash}-${file.originalname}`;
-
-        return callback(null, filename);
+      if (!mimeType && !extensionFilename) {
+        return callback(
+          new AppError('Somente arquivos de imagens (jpeg-jpg-png) válidos.'),
+          file.filename,
+        );
       }
 
-      return callback(
-        new Error('Somente arquivos de imagems válidos (jpeg-jpg-png).'),
-        file.filename,
-      );
+      const fileHash = crypto.randomBytes(10).toString('hex');
+      const filename = `${fileHash}-${file.originalname}`;
+
+      return callback(null, filename);
     },
   }),
 };

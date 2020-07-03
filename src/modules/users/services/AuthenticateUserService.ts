@@ -1,29 +1,28 @@
-import { getCustomRepository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { compare } from 'bcryptjs';
 
-import UsersRepository from '@modules/users/infra/repositories/UsersRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
 
 import AppError from '@shared/errors/AppError';
 
 import authConfig from '@config/auth';
 
-interface Request {
+interface IRequest {
   email: string;
   password: string;
 }
 
-interface Response {
+interface IResponse {
   user: User;
   token: string;
 }
 
 class AuthenticateUserService {
-  public async execute({ email, password }: Request): Promise<Response> {
-    const usersRepository = getCustomRepository(UsersRepository);
+  constructor(private usersRepository: IUsersRepository) {}
 
-    const user = await usersRepository.findbyEmail(email);
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError('E-mail inválido.', 401);

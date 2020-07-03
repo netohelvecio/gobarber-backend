@@ -2,7 +2,7 @@ import { diskStorage } from 'multer';
 import crypto from 'crypto';
 import path from 'path';
 
-import AppError from '../error/AppError';
+import AppError from '@shared/errors/AppError';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 

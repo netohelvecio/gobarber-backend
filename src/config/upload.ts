@@ -5,9 +5,11 @@ import path from 'path';
 import AppError from '@shared/errors/AppError';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
+const uploadsFolder = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
 
 const uploadConfig = {
-  directory: tmpFolder,
+  tmpFolder,
+  uploadsFolder,
   limits: { fileSize: 100000 },
   storage: diskStorage({
     destination: tmpFolder,

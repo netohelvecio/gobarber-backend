@@ -1,5 +1,4 @@
 import { injectable, inject } from 'tsyringe';
-import { hash } from 'bcryptjs';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
